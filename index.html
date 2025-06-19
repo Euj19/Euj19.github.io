@@ -1,9 +1,20 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eujin Chae</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .typewriter-cursor::after {
+        content: '|';
+        animation: blink 1s step-start infinite;
+      }
+
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+    </style>
   </head>
   <body class="bg-white text-black font-sans">
     <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto">
@@ -18,23 +29,38 @@
     <main class="max-w-2xl mx-auto p-6">
       <section class="flex items-center space-x-4">
         <div class="flex-1">
-          <h1 class="text-3xl font-bold mb-8">Hi! I'm Eujin Chae</h1>
+          <h1 id="typewriter" class="text-3xl font-bold mb-8 whitespace-nowrap typewriter-cursor"></h1>
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              const text = "Hi! I'm Eujin Chae";
+              const element = document.getElementById("typewriter");
+              let i = 0;
+              function type() {
+                if (i < text.length) {
+                  element.textContent += text.charAt(i);
+                  i++;
+                  setTimeout(type, 80);
+                }
+              }
+              type();
+            });
+          </script>
+
           <p class="mb-4 text-gray-700">
             I'm a recent graduate from Middlebury College with a B.A in Statistics.
-            </p>
-            <p class="text-gray-600 mb-4">
-        I enjoy transforming complex data into meaningful insights through the use of 
-        data science and statistical methods. I've gained experience in data working as a data analyst at Sports Innovation Lab, 
-        research assistant, and through personal projects.
-      </p>
-      <p class="text-gray-600 mb-4">
-        Currently, I am looking for full time positions where I can grow as a data professional and apply my experience and skills in data. 
-      </p>
-      <p class="text-gray-600 mb-8">
-        I occasionally write reflections and publish data breakdowns on this site.
-      </p>
+          </p>
+          <p class="text-gray-600 mb-4">
+            I enjoy transforming complex data into meaningful insights through the use of 
+            data science and statistical methods. I've gained experience in data working as a data analyst at Sports Innovation Lab, 
+            research assistant, and through personal projects.
+          </p>
+          <p class="text-gray-600 mb-4">
+            Currently, I am looking for full time positions where I can grow as a data professional and apply my experience and skills in data. 
+          </p>
+          <p class="text-gray-600 mb-8">
+            I occasionally write reflections and publish data breakdowns on this site.
+          </p>
         </div>
-         
       </section>
 
       <section class="mt-10">
@@ -48,24 +74,23 @@
         <div class="flex space-x-6 text-4xl">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R" class="w-10 h-10" />
           <img src="https://img.icons8.com/ios-filled/100/000000/sql.png" alt="SQL" class="w-10 h-10" />
-      
         </div>
       </section>
-      
-<section class="mt-10">
-  <h2 class="text-lg font-semibold mb-4">Education</h2>
-  <div class="flex items-center space-x-4">
-    <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-16 h-16" />
-    <div>
-      <p class="font-medium">Middlebury College</p>
-      <p class="text-sm text-gray-600">B.A. in Statistics</p>
-    </div>
-  </div>
-</section>
+
+      <section class="mt-10">
+        <h2 class="text-lg font-semibold mb-4">Education</h2>
+        <div class="flex items-center space-x-4">
+          <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-16 h-16" />
+          <div>
+            <p class="font-medium">Middlebury College</p>
+            <p class="text-sm text-gray-600">B.A. in Statistics</p>
+          </div>
+        </div>
+      </section>
 
       <footer class="mt-10 text-sm text-gray-600 flex space-x-4">
         <a href="https://github.com/Euj19" class="hover:underline">↗ github</a>
-       <a href="https://linkedin.com/in/eujin-chae" class="hover:underline" target="_blank" rel="noopener noreferrer">↗ linkedin</a>
+        <a href="https://linkedin.com/in/eujin-chae" class="hover:underline" target="_blank" rel="noopener noreferrer">↗ linkedin</a>
         <a href="resume.pdf" class="hover:underline" target="_blank" rel="noopener noreferrer">↗ resume</a>
       </footer>
     </main>
