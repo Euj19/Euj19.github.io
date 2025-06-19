@@ -1,39 +1,61 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Eujin Chae</title>
-  <style>
-    body {
-      max-width: 600px;
-      margin: 40px auto;
-      font-family: sans-serif;
-      line-height: 1.6;
-      color: #222;
-      padding: 0 1em;
-    }
-    h1 { font-size: 2em; }
-    a { color: #007acc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <h1>Eujin Chae</h1>
-  <p>Data Analyst | Statistics Major | Passionate about translating data into insights.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eujin Chae</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-white text-black font-sans">
+    <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto">
+      <div class="flex space-x-6">
+        <a href="#" class="text-sm font-medium hover:underline">home</a>
+        <a href="#" class="text-sm font-medium hover:underline">blog</a>
+        <a href="#" class="text-sm font-medium hover:underline">projects</a>
+      </div>
+      <button class="text-xl">🌙</button>
+    </nav>
 
-  <h2>Projects</h2>
-  <ul>
-    <li><a href="https://github.com/eujinchae/fifa-crosses">Unraveling Cross Efficiency at the World Cup (2018 vs 2022)</a></li>
-    <li><a href="https://github.com/eujinchae/imessage-rf">Random Forest Classifier for iMessage Conversations</a></li>
-    <li><a href="https://eujinchae.shinyapps.io/vermont_dashboard">Shiny Dashboard: Vermont Economic Trends</a></li>
-  </ul>
+    <main class="max-w-2xl mx-auto p-6">
+      <section class="flex items-center space-x-4">
+        <div class="flex-1">
+          <h1 class="text-3xl font-bold mb-2">Hi! I'm Eujin Chae</h1>
+          <p class="mb-4 text-gray-700">
+            I’m a data analyst with a B.A. in Statistics from Middlebury College.
+            I’ve conducted research, built interactive dashboards, and enjoy
+            communicating insights clearly. Currently looking to contribute to
+            a mission-driven company through data.
+          </p>
+          <p class="text-gray-600">
+            I occasionally write reflections and publish data breakdowns on this site.
+          </p>
+        </div>
+        <img src="https://avatars.githubusercontent.com/u/9919?v=4" alt="avatar" class="w-24 h-24 rounded-full border-4 border-pink-400 shadow-md" />
+      </section>
 
-  <h2>About</h2>
-  <p>I’m a recent graduate from Middlebury College with a B.A. in Statistics. I have experience in R, Python, SQL, and Excel. I love solving real-world problems with data and telling stories that drive decisions.</p>
+      <section class="mt-10">
+        <h2 class="text-lg font-semibold mb-2">Latest Blog</h2>
+        <div class="text-gray-500 text-sm">June 18, 2025</div>
+        <div class="text-black font-medium">Unraveling Cross Efficiency in World Cup 2022</div>
+      </section>
 
-  <h2>Contact</h2>
-  <p>Email: eujinchae@email.com<br>
-     GitHub: <a href="https://github.com/eujinchae">eujinchae</a><br>
-     LinkedIn: <a href="https://linkedin.com/in/eujinchae">linkedin.com/in/eujinchae</a></p>
-</body>
+      <section class="mt-10">
+        <h2 class="text-lg font-semibold mb-4">Skills</h2>
+        <div class="flex space-x-4 text-2xl">
+          <span>🐍</span>
+          <span>📊</span>
+          <span>🧠</span>
+          <span>📈</span>
+          <span>💻</span>
+          <span>📦</span>
+          <span>🌐</span>
+        </div>
+      </section>
+
+      <footer class="mt-10 text-sm text-gray-600 flex space-x-4">
+        <a href="https://github.com/eujinchae" class="hover:underline">↗ github</a>
+        <a href="https://linkedin.com/in/eujinchae" class="hover:underline">↗ linkedin</a>
+        <a href="#" class="hover:underline">↗ resume</a>
+      </footer>
+    </main>
+  </body>
 </html>
