@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-white text-black font-sans">
+    <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto">
+      <div class="flex space-x-6">
+        <a href="index.html" class="text-sm font-medium hover:underline">home</a>
+        <a href="blog/" class="text-sm font-medium hover:underline">blog</a>
+        <a href="projects.html" class="text-sm font-medium hover:underline">projects</a>
+      </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto p-6">
+      <h1 class="text-2xl font-bold mb-6">Write a Blog Post</h1>
+
+      <div class="grid gap-4">
+        <div class="grid gap-2">
+          <label class="text-sm font-medium" for="title">Title</label>
+          <input id="title" class="border border-black/20 rounded-md p-2" placeholder="e.g., What I learned cleaning messy data" />
+        </div>
+
+        <div class="grid gap-2">
+          <label class="text-sm font-medium" for="description">Short description (optional)</label>
+          <input id="description" class="border border-black/20 rounded-md p-2" placeholder="Appears on the blog list page" />
+        </div>
+
+        <div class="grid gap-2">
+          <label class="text-sm font-medium" for="date">Date</label>
+          <input id="date" type="date" class="border border-black/20 rounded-md p-2" />
+        </div>
+
+        <div class="grid gap-2">
+          <label class="text-sm font-medium" for="body">Body (Markdown)</label>
+          <textarea id="body" rows="16" class="border border-black/20 rounded-md p-2 font-mono text-sm"
+            placeholder="Write in Markdown...&#10;&#10;## Heading&#10;Some text..."></textarea>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mt-2 items-center">
+          <button id="downloadBtn" class="border border-black/30 rounded-md px-4 py-2 hover:bg-black/5">
+            Download .md
+          </button>
+
+          <button id="copyBtn" class="border border-black/30 rounded-md px-4 py-2 hover:bg-black/5">
+            Copy Markdown
+          </button>
+
+          <div class="text-sm text-black/70" id="filenameHint"></div>
+        </div>
+
+        <div class="mt-6 border-t border-black/10 pt-4">
+          <h2 class="text-lg font-semibold mb-2">Fast publish workflow (GitHub Pages)</h2>
+          <ol class="list-decimal pl-5 text-sm text-black/80 space-y-1">
+            <li>Write your post here.</li>
+            <li>Click <span class="font-medium">Download .md</span>.</li>
+            <li>In GitHub: open <span class="font-medium">_posts</span> → <span class="font-medium">Add file → Upload files</span> → drag in the file → commit.</li>
+          </ol>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const titleEl = document.getElementById("title");
+      const descEl = document.getElementById("description");
+      const dateEl = document.getElementById("date");
+      const bodyEl = document.getElementById("body");
+      const filenameHintEl = document.getElementById("filenameHint");
+
+      const STORAGE_KEY = "blog_editor_draft_v1";
+
+      function pad2(n) { return String(n).padStart(2, "0"); }
+
+      function todayISODate() {
+        const d = new Date();
+        return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+      }
+
+      function slugify(s) {
+        return (s || "")
+          .trim()
+          .toLowerCase()
+          .replace(/['"]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)/g, "")
+          .slice(0, 80) || "untitled";
+      }
+
+      function computeFilename() {
+        const date = dateEl.value || todayISODate();
+        const slug = slugify(titleEl.value);
+        return `${date}-${slug}.md`;
+      }
+
+      function buildMarkdown() {
+        const title = (titleEl.value || "").trim() || "Untitled";
+        const date = dateEl.value || todayISODate();
+        const description = (descEl.value || "").trim();
+        const body = bodyEl.value || "";
+
+        const frontMatter = [
+          "---",
+          "layout: post",
+          `title: "${title.replace(/"/g, '\\"')}"`,
+          `date: ${date}`,
+          ...(description ? [`description: "${description.replace(/"/g, '\\"')}"`] : []),
+          "---",
+          ""
+        ].join("\n");
+
+        return frontMatter + body.trimStart();
+      }
+
+      function updateFilenameHint(msg) {
+        filenameHintEl.textContent = msg || `Suggested filename: _posts/${computeFilename()}`;
+      }
+
+      function saveDraft() {
+        const draft = {
+          title: titleEl.value,
+          description: descEl.value,
+          date: dateEl.value,
+          body: bodyEl.value
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+      }
+
+      function loadDraft() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        try {
+          const d = JSON.parse(raw);
+          titleEl.value = d.title || "";
+          descEl.value = d.description || "";
+          dateEl.value = d.date || "";
+          bodyEl.value = d.body || "";
+        } catch {}
+      }
+
+      function downloadFile(filename, content) {
+        const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      async function copyToClipboard(text) {
+        await navigator.clipboard.writeText(text);
+      }
+
+      // init
+      dateEl.value = todayISODate();
+      loadDraft();
+      updateFilenameHint();
+
+      [titleEl, descEl, dateEl, bodyEl].forEach(el => {
+        el.addEventListener("input", () => {
+          updateFilenameHint();
+          saveDraft();
+        });
+      });
+
+      document.getElementById("downloadBtn").addEventListener("click", () => {
+        downloadFile(computeFilename(), buildMarkdown());
+      });
+
+      document.getElementById("copyBtn").addEventListener("click", async () => {
+        await copyToClipboard(buildMarkdown());
+        updateFilenameHint("Copied to clipboard.");
+        setTimeout(() => updateFilenameHint(), 1200);
+      });
+    </script>
+  </body>
+</html>
