@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Write a Post | Eujin Chae</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Quill.js -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    .ql-toolbar {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      border-color: #e5e5e5;
+      background: #fafafa;
+    }
+    .ql-container {
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      border-color: #e5e5e5;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
+    }
+    .ql-editor {
+      min-height: 300px;
+      line-height: 1.7;
+    }
+    .ql-editor.ql-blank::before {
+      font-style: normal;
+      color: #a3a3a3;
+    }
+  </style>
+</head>
+<body class="bg-white text-neutral-900 font-sans antialiased">
+  <nav class="flex justify-between items-center px-6 py-8 max-w-4xl mx-auto">
+    <div class="flex space-x-8">
+      <a href="/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900">home</a>
+      <a href="/blog/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900">blog</a>
+      <a href="/projects.html" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900">projects</a>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-6 py-8">
+    <h1 class="text-3xl font-bold mb-2 tracking-tight">Write a Post</h1>
+    <p class="text-neutral-500 mb-8">Share your thoughts with the world</p>
+
+    <!-- Post Form -->
+    <div id="postForm">
+      <!-- Title -->
+      <div class="mb-6">
+        <label for="postTitle" class="block text-sm font-medium text-neutral-700 mb-2">Title</label>
+        <input type="text" id="postTitle" placeholder="Enter your post title..." class="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition">
+      </div>
+
+      <!-- Author (optional) -->
+      <div class="mb-6">
+        <label for="postAuthor" class="block text-sm font-medium text-neutral-700 mb-2">
+          Author <span class="text-neutral-400 font-normal">(optional)</span>
+        </label>
+        <input type="text" id="postAuthor" placeholder="Your name or leave blank for Anonymous" class="w-full px-4 py-3 border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition">
+      </div>
+
+      <!-- Content Editor -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-neutral-700 mb-2">Content</label>
+        <div id="editor"></div>
+      </div>
+
+      <!-- Submit Button -->
+      <button id="submitBtn" onclick="submitPost()" class="w-full bg-neutral-900 text-white py-3 px-6 rounded-lg font-medium hover:bg-neutral-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+        Publish Post
+      </button>
+
+      <!-- Error Message -->
+      <div id="errorMsg" class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700"></div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMsg" class="hidden">
+      <div class="text-center py-12">
+        <div class="text-5xl mb-4">&#10003;</div>
+        <h2 class="text-2xl font-bold mb-2">Post Published!</h2>
+        <p class="text-neutral-600 mb-6">Your post is now live on the blog.</p>
+        <div class="flex gap-4 justify-center">
+          <a id="viewPostLink" href="#" class="bg-neutral-900 text-white py-2 px-6 rounded-lg font-medium hover:bg-neutral-800 transition">View Post</a>
+          <a href="/blog/" class="border border-neutral-300 text-neutral-700 py-2 px-6 rounded-lg font-medium hover:bg-neutral-50 transition">Back to Blog</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/firebase-config.js"></script>
+  <script>
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: 'Write your post content here...',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['blockquote', 'code-block'],
+          ['link'],
+          ['clean']
+        ]
+      }
+    });
+
+    function stripHtml(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      return tmp.textContent || tmp.innerText || '';
+    }
+
+    async function submitPost() {
+      const title = document.getElementById('postTitle').value.trim();
+      const author = document.getElementById('postAuthor').value.trim() || 'Anonymous';
+      const content = quill.root.innerHTML;
+      const plainText = stripHtml(content);
+
+      if (!title) { showError('Please enter a title for your post.'); return; }
+      if (plainText.length < 10) { showError('Please write some content for your post.'); return; }
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Publishing...';
+
+      try {
+        const excerpt = plainText.substring(0, 150) + (plainText.length > 150 ? '...' : '');
+        const docRef = await postsCollection.add({
+          title: title,
+          author: author,
+          content: content,
+          excerpt: excerpt,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        document.getElementById('postForm').classList.add('hidden');
+        document.getElementById('successMsg').classList.remove('hidden');
+        document.getElementById('viewPostLink').href = '/blog/post.html?id=' + docRef.id;
+      } catch (error) {
+        console.error('Error adding post:', error);
+        showError('Failed to publish post. Please make sure Firebase is configured correctly.');
+        btn.disabled = false;
+        btn.textContent = 'Publish Post';
+      }
+    }
+
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMsg');
+      errorDiv.textContent = message;
+      errorDiv.classList.remove('hidden');
+      setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+    }
+  </script>
+</body>
+</html>
