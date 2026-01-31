@@ -1,18 +1,154 @@
----
-layout: default
-title: Blog
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | Eujin Chae</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
 
-<h1 class="text-2xl font-bold mb-6">Blog</h1>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="bg-white text-neutral-900 font-sans antialiased">
+  <nav class="flex justify-between items-center px-6 py-8 max-w-4xl mx-auto">
+    <div class="flex space-x-8">
+      <a href="/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900">home</a>
+      <a href="/blog/" class="text-sm font-medium tracking-wide text-neutral-900">blog</a>
+      <a href="/projects.html" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900">projects</a>
+    </div>
+  </nav>
 
-<ul class="space-y-5">
-  {% for post in site.posts %}
-    <li>
-      <a class="text-lg font-medium hover:underline" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <div class="text-sm text-black/70">{{ post.date | date: "%B %-d, %Y" }}</div>
-      {% if post.description %}
-        <p class="mt-1 text-black/80">{{ post.description }}</p>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+  <main class="max-w-2xl mx-auto px-6 py-8">
+    <!-- Header with Write Button -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold tracking-tight">Blog</h1>
+      <a href="/blog/write.html" class="bg-neutral-900 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-neutral-800 transition">
+        Write a Post
+      </a>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="space-y-6">
+      <div class="animate-pulse">
+        <div class="h-6 bg-neutral-200 rounded w-2/3 mb-2"></div>
+        <div class="h-4 bg-neutral-100 rounded w-1/4 mb-2"></div>
+        <div class="h-4 bg-neutral-100 rounded w-full"></div>
+      </div>
+      <div class="animate-pulse">
+        <div class="h-6 bg-neutral-200 rounded w-1/2 mb-2"></div>
+        <div class="h-4 bg-neutral-100 rounded w-1/4 mb-2"></div>
+        <div class="h-4 bg-neutral-100 rounded w-5/6"></div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-12">
+      <div class="text-5xl mb-4">&#128221;</div>
+      <h2 class="text-xl font-semibold mb-2">No posts yet</h2>
+      <p class="text-neutral-600 mb-6">Be the first to share something!</p>
+      <a href="/blog/write.html" class="inline-block bg-neutral-900 text-white py-2 px-6 rounded-lg font-medium hover:bg-neutral-800 transition">
+        Write the First Post
+      </a>
+    </div>
+
+    <!-- Posts List -->
+    <ul id="postsList" class="hidden space-y-8"></ul>
+  </main>
+
+  <script src="/firebase-config.js"></script>
+  <script>
+    // Format date
+    function formatDate(timestamp) {
+      if (!timestamp) return 'Just now';
+      const date = timestamp.toDate();
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    // Create post HTML
+    function createPostElement(id, post) {
+      const li = document.createElement('li');
+      li.className = 'border-b border-neutral-100 pb-6';
+
+      li.innerHTML = `
+        <a href="/blog/post.html?id=${id}" class="block group">
+          <h2 class="text-xl font-semibold mb-1 group-hover:text-neutral-600 transition">${escapeHtml(post.title)}</h2>
+          <div class="flex items-center gap-2 text-sm text-neutral-500 mb-2">
+            <span>${escapeHtml(post.author || 'Anonymous')}</span>
+            <span>&bull;</span>
+            <span>${formatDate(post.createdAt)}</span>
+          </div>
+          <p class="text-neutral-600 line-clamp-2">${escapeHtml(post.excerpt || '')}</p>
+        </a>
+      `;
+
+      return li;
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Load posts from Firebase
+    async function loadPosts() {
+      try {
+        const snapshot = await postsCollection
+          .orderBy('createdAt', 'desc')
+          .limit(50)
+          .get();
+
+        const loadingState = document.getElementById('loadingState');
+        const emptyState = document.getElementById('emptyState');
+        const postsList = document.getElementById('postsList');
+
+        loadingState.classList.add('hidden');
+
+        if (snapshot.empty) {
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        postsList.classList.remove('hidden');
+
+        snapshot.forEach(doc => {
+          const postElement = createPostElement(doc.id, doc.data());
+          postsList.appendChild(postElement);
+        });
+
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('loadingState').innerHTML = `
+          <div class="text-center py-8 text-neutral-500">
+            <p>Unable to load posts.</p>
+            <p class="text-sm mt-2">Please check that Firebase is configured correctly.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Load posts on page load
+    loadPosts();
+  </script>
+</body>
+</html>
