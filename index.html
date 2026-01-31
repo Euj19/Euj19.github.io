@@ -4,31 +4,104 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eujin Chae</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
     <style>
       .typewriter-cursor::after {
         content: '|';
         animation: blink 1s step-start infinite;
+        color: #6b7280;
       }
 
       @keyframes blink {
         50% { opacity: 0; }
       }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
+
+      .delay-100 { animation-delay: 0.1s; opacity: 0; }
+      .delay-200 { animation-delay: 0.2s; opacity: 0; }
+      .delay-300 { animation-delay: 0.3s; opacity: 0; }
+
+      .nav-link {
+        position: relative;
+        transition: color 0.2s ease;
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: currentColor;
+        transition: width 0.2s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .footer-link {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .footer-link:hover {
+        opacity: 0.7;
+        transform: translateX(2px);
+      }
+
+      .skill-icon {
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        opacity: 0.8;
+      }
+
+      .skill-icon:hover {
+        transform: scale(1.1);
+        opacity: 1;
+      }
     </style>
   </head>
-  <body class="bg-white text-black font-sans">
-    <nav class="flex justify-between items-center p-6 max-w-4xl mx-auto">
-      <div class="flex space-x-6">
-        <a href="#" class="text-sm font-medium hover:underline">home</a>
-        <a href="blog/" class="text-sm font-medium hover:underline">blog</a>
-        <a href="projects.html" class="text-sm font-medium hover:underline">projects</a>
+  <body class="bg-white text-neutral-900 font-sans antialiased">
+    <nav class="flex justify-between items-center px-6 py-8 max-w-4xl mx-auto animate-fade-in">
+      <div class="flex space-x-8">
+        <a href="#" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">home</a>
+        <a href="blog/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">blog</a>
+        <a href="projects.html" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">projects</a>
       </div>
     </nav>
 
-    <main class="max-w-2xl mx-auto p-6">
-      <section class="flex items-center space-x-4">
+    <main class="max-w-2xl mx-auto px-6 py-8">
+      <section class="flex items-center space-x-4 animate-fade-in delay-100">
         <div class="flex-1">
-          <h1 id="typewriter" class="text-3xl font-bold mb-8 whitespace-nowrap typewriter-cursor"></h1>
+          <h1 id="typewriter" class="text-4xl font-bold mb-10 whitespace-nowrap typewriter-cursor tracking-tight"></h1>
           <script>
             document.addEventListener("DOMContentLoaded", function() {
               const text = "Hi! I'm Eujin Chae";
@@ -45,32 +118,34 @@
             });
           </script>
 
-<p class="text-black mb-4">
-          I've been a research assistant, a data analyst at Sports Innovation Lab, and now a Research Analyst at Evidenza, a Brooklyn startup transforming market research with AI. I'm passionate about data, technology, and storytelling.
-                </p>
-          <p>
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R" class="w-10 h-10" />
-          <p> 
-          <img src="https://img.icons8.com/ios-filled/100/000000/sql.png" alt="SQL" class="w-10 h-10" />
-        </div>
-      </section>
+          <p class="text-lg text-neutral-600 mb-8 leading-relaxed">
+            I've been a research assistant, a data analyst at Sports Innovation Lab, and now a Research Analyst at Evidenza, a Brooklyn startup transforming market research with AI. I'm passionate about data, technology, and storytelling.
+          </p>
 
-      <section class="mt-10">
-        <h2 class="text-lg font-semibold mb-4">Education</h2>
-        <div class="flex items-center space-x-4">
-          <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-16 h-16" />
-          <div>
-            <p class="font-medium">Middlebury College</p>
-            <p class="text-sm text-black">B.A. in Statistics</p>
+          <div class="flex space-x-4 mb-6">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R" class="w-10 h-10 skill-icon" />
+            <img src="https://img.icons8.com/ios-filled/100/000000/sql.png" alt="SQL" class="w-10 h-10 skill-icon" />
           </div>
         </div>
       </section>
-      
 
-      <footer class="mt-10 text-sm text-black flex space-x-4">
-        <a href="https://github.com/Euj19" class="hover:underline">↗ github</a>
-        <a href="https://linkedin.com/in/eujin-chae" class="hover:underline" target="_blank" rel="noopener noreferrer">↗ linkedin</a>
-        <a href="resume.pdf" class="hover:underline" target="_blank" rel="noopener noreferrer">↗ resume</a>
+      <section class="mt-16 animate-fade-in delay-200">
+        <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-400 mb-6">Education</h2>
+        <div class="flex items-center space-x-5">
+          <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-14 h-14" />
+          <div>
+            <p class="font-semibold text-neutral-900">Middlebury College</p>
+            <p class="text-sm text-neutral-500">B.A. in Statistics</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="mt-20 pt-8 border-t border-neutral-100 animate-fade-in delay-300">
+        <div class="flex space-x-6 text-sm text-neutral-500">
+          <a href="https://github.com/Euj19" class="footer-link">github</a>
+          <a href="https://linkedin.com/in/eujin-chae" class="footer-link" target="_blank" rel="noopener noreferrer">linkedin</a>
+          <a href="resume.pdf" class="footer-link" target="_blank" rel="noopener noreferrer">resume</a>
+        </div>
       </footer>
     </main>
   </body>
