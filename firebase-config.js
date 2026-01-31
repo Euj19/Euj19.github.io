@@ -1,14 +1,13 @@
 // Firebase Configuration
-// Replace these values with your Firebase project config
-// Get this from: Firebase Console > Project Settings > Your apps > Web app
+// Real credentials for eujin-blog-2026 project
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDuF2g-S5WaaKvFIk1BEjvzzht8tgJF8As",
+  authDomain: "eujin-blog-2026.firebaseapp.com",
+  projectId: "eujin-blog-2026",
+  storageBucket: "eujin-blog-2026.firebasestorage.app",
+  messagingSenderId: "758537324697",
+  appId: "1:758537324697:web:70cf8ae1ebbac35c9f1008"
 };
 
 // Initialize Firebase
