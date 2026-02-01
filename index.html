@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eujin Chae</title>
@@ -9,181 +9,132 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {            darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-            },
-          }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
         }
-      }
     </script>
     <style>
-      .typewriter-cursor::after {
-        content: '|';
-        animation: blink 1s step-start infinite;
-        color: #6b7280;
-      }
-
-      @keyframes blink {
-        50% { opacity: 0; }
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(12px);
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: #6b7280;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+        @keyframes blink {
+            50% { opacity: 0; }
         }
-      }
-
-      .animate-fade-in {
-        animation: fadeInUp 0.6s ease-out forwards;
-      }
-
-      .delay-100 { animation-delay: 0.1s; opacity: 0; }
-      .delay-200 { animation-delay: 0.2s; opacity: 0; }
-      .delay-300 { animation-delay: 0.3s; opacity: 0; }
-
-      .nav-link {
-        position: relative;
-        transition: color 0.2s ease;
-      }
-
-      .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 0;
-        height: 1px;
-        background-color: currentColor;
-        transition: width 0.2s ease;
-      }
-
-      .nav-link:hover::after {
-        width: 100%;
-      }
-
-      .footer-link {
-        transition: opacity 0.2s ease, transform 0.2s ease;
-      }
-
-      .footer-link:hover {
-        opacity: 0.7;
-        transform: translateX(2px);
-      }
-
-      .skill-icon {
-        transition: transform 0.2s ease, opacity 0.2s ease;
-        opacity: 0.8;
-      }
-
-      .skill-icon:hover {
-        transform: scale(1.1);
-        opacity: 1;
-      }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .delay-300 { animation-delay: 0.3s; opacity: 0; }
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: currentColor;
+            transition: width 0.2s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .footer-link {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .footer-link:hover {
+            opacity: 0.7;
+            transform: translateX(2px);
+        }
+        .skill-icon {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            opacity: 0.8;
+        }
+        .skill-icon:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
     </style>
-  </head>
-  <body class="bg-white text-neutral-900 font-sans antialiased dark:bg-neutral-900 dark:text-white transition-colors duration-300">
+</head>
+<body class="bg-white text-neutral-900 font-sans antialiased">
     <nav class="flex justify-between items-center px-6 py-8 max-w-4xl mx-auto animate-fade-in">
-      <div class="flex space-x-8">
-        <a href="#" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">home</a>
-        <a href="blog/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">blog</a>
-        <a href="projects.html" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">projects</a>
-                <button id="darkModeToggle" class="ml-4 p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-                            <svg id="sunIcon" class="w-5 h-5 hidden text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>path></svg>svg>
-                            <svg id="moonIcon" class="w-5 h-5 text-neutral-600 dark:text-neutral-400" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>path></svg>svg>
-                </button>button>
-      </div>
+        <div class="flex space-x-8">
+            <a href="#" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">home</a>
+            <a href="blog/" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">blog</a>
+            <a href="projects.html" class="text-sm font-medium tracking-wide text-neutral-600 hover:text-neutral-900 nav-link">projects</a>
+        </div>
     </nav>
 
     <main class="max-w-2xl mx-auto px-6 py-8">
-      <section class="flex items-center space-x-4 animate-fade-in delay-100">
-        <div class="flex-1">
-          <h1 id="typewriter" class="text-4xl font-bold mb-10 whitespace-nowrap typewriter-cursor tracking-tight"></h1>
-          <script>
-            document.addEventListener("DOMContentLoaded", function() {
-              const text = "Hi! I'm Eujin Chae";
-              const element = document.getElementById("typewriter");
-              let i = 0;
-              function type() {
-                if (i < text.length) {
-                  element.textContent += text.charAt(i);
-                  i++;
-                  setTimeout(type, 95);
-                }
-              }
-              type();
-            });
-          </script>
-
-          <p class="text-base text-neutral-600 mb-8 leading-relaxed">
-            I've been a research assistant, a data analyst at Sports Innovation Lab, and now a Research Analyst at Evidenza, a Brooklyn startup transforming market research with AI. I'm passionate about data, technology, and storytelling.
-          </p>
-
-          <div class="flex space-x-4 mb-6">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R" class="w-10 h-10 skill-icon" />
-            <img src="https://img.icons8.com/ios-filled/100/000000/sql.png" alt="SQL" class="w-10 h-10 skill-icon" />
+        <section class="flex items-center space-x-4 animate-fade-in delay-100">
+            <div class="flex-1">
+                <h1 id="typewriter" class="text-4xl font-bold mb-10 whitespace-nowrap typewriter-cursor tracking-tight"></h1>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const text = "Hi! I'm Eujin Chae";
+                        const element = document.getElementById("typewriter");
+                        let i = 0;
+                        function type() {
+                            if (i < text.length) {
+                                element.textContent += text.charAt(i);
+                                i++;
+                                setTimeout(type, 95);
+                            }
+                        }
+                        type();
+                    });
+                </script>
+                <p class="text-base text-neutral-600 mb-8 leading-relaxed">
+                    I've been a research assistant, a data analyst at Sports Innovation Lab, and now a Research Analyst at Evidenza, a Brooklyn startup transforming market research with AI. I'm passionate about data, technology, and storytelling.
+                </p>
+                <div class="flex space-x-4 mb-6">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R" class="w-10 h-10 skill-icon" />
+                    <img src="https://img.icons8.com/ios-filled/100/000000/sql.png" alt="SQL" class="w-10 h-10 skill-icon" />
                     <img src="https://img.icons8.com/color/48/microsoft-excel-2019--v1.png" alt="Excel" class="w-10 h-10 skill-icon" />
-          </div>
-        </div>
-      </section>
+                </div>
+            </div>
+        </section>
 
-      <section class="mt-16 animate-fade-in delay-200">
-        <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-400 mb-6">Education</h2>
-        <div class="flex items-center space-x-5">
-          <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-14 h-14" />
-          <div>
-            <p class="font-semibold text-neutral-900">Middlebury College</p>
-            <p class="text-sm text-neutral-500">B.A. in Statistics</p>
-          </div>
-        </div>
-      </section>
+        <section class="mt-16 animate-fade-in delay-200">
+            <h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-400 mb-6">Education</h2>
+            <div class="flex items-center space-x-5">
+                <img src="middlebury-logo.png" alt="Middlebury College logo" class="w-14 h-14" />
+                <div>
+                    <p class="font-semibold text-neutral-900">Middlebury College</p>
+                    <p class="text-sm text-neutral-500">B.A. in Statistics</p>
+                </div>
+            </div>
+        </section>
 
-      <footer class="mt-20 pt-8 border-t border-neutral-100 animate-fade-in delay-300">
-        <div class="flex space-x-6 text-sm text-neutral-500">
-          <a href="https://github.com/Euj19" class="footer-link">github</a>
-          <a href="https://linkedin.com/in/eujin-chae" class="footer-link" target="_blank" rel="noopener noreferrer">linkedin</a>
-          <a href="resume.pdf" class="footer-link" target="_blank" rel="noopener noreferrer">resume</a>
-        </div>
-      </footer>
+        <footer class="mt-20 pt-8 border-t border-neutral-100 animate-fade-in delay-300">
+            <div class="flex space-x-6 text-sm text-neutral-500">
+                <a href="https://github.com/Euj19" class="footer-link">github</a>
+                <a href="https://linkedin.com/in/eujin-chae" class="footer-link" target="_blank" rel="noopener noreferrer">linkedin</a>
+                <a href="resume.pdf" class="footer-link" target="_blank" rel="noopener noreferrer">resume</a>
+            </div>
+        </footer>
     </main>
-
-      <script>
-            // Dark mode toggle
-            const toggle = document.getElementById('darkModeToggle');
-            const sunIcon = document.getElementById('sunIcon');
-            const moonIcon = document.getElementById('moonIcon');
-
-            function setDarkMode(dark) {
-                    if (dark) {
-                              document.documentElement.classList.add('dark');
-                              sunIcon.classList.remove('hidden');
-                              moonIcon.classList.add('hidden');
-                              localStorage.setItem('darkMode', 'true');
-                    } else {
-                              document.documentElement.classList.remove('dark');
-                              sunIcon.classList.add('hidden');
-                              moonIcon.classList.remove('hidden');
-                              localStorage.setItem('darkMode', 'false');
-                    }
-            }
-
-            // Check saved preference or system preference
-            if (localStorage.getItem('darkMode') === 'true' || 
-                        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    setDarkMode(true);
-            }
-
-            toggle.addEventListener('click', () => {
-                    setDarkMode(!document.documentElement.classList.contains('dark'));
-            });
-      </script>
-      </script>
-  </body>
+</body>
 </html>
