@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects - Eujin Chae</title>
   <script src="https://cdn.tailwindcss.com"></script>
-      <script>tailwind.config = { darkMode: 'class' }</script></script>
 </head>
-<body class="bg-white text-black font-sans dark:bg-neutral-900 dark:text-white transition-colors duration-300">
+<body class="bg-white text-black font-sans">
   <nav class="flex justify-between items-center p-6 max-w-5xl mx-auto">
     <div class="flex space-x-6">
       <a href="index.html" class="text-sm font-medium hover:underline">home</a>
@@ -23,7 +22,7 @@
       <!-- Project 1 -->
       <div class="bg-white border rounded-lg shadow overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-xl cursor-pointer">
             <img src="sil_cover.png" alt="Sports Innovation Lab Report Cover" class="h-40 w-full object-cover">        <div class="p-4">
-          <h3 class="text-md font-semibold mb-1">Sports Innovation Lab Report/h3>
+          <h3 class="text-md font-semibold mb-1">Sports Innovation Lab Report</h3>
           <p class="text-sm text-gray-600 mb-2">Analyzed demographics and spending behavior of College Sports Fans using Sports Innovation Lab's data cloud and SQL.</p>
           <a href="SIL_report_Eujin.pdf" class="text-blue-500 text-sm hover:underline">Read full report ↗</a>
         </div>
@@ -49,39 +48,5 @@
 
     </div>
   </main>
-
-      <!-- Sleek dark mode toggle - fixed bottom right -->
-      <button id="darkModeToggle" class="fixed bottom-6 right-6 p-3 rounded-full bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-all duration-200 shadow-lg hover:shadow-xl border border-neutral-200 dark:border-neutral-700">
-                <svg id="sunIcon" class="w-5 h-5 hidden text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>path></svg>svg>
-                <svg id="moonIcon" class="w-5 h-5 text-neutral-500 dark:text-neutral-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>path></svg>svg>
-      </button>button>
-
-      <script>
-                const toggle = document.getElementById('darkModeToggle');
-                const sunIcon = document.getElementById('sunIcon');
-                const moonIcon = document.getElementById('moonIcon');
-                function setDarkMode(dark) {
-                              if (dark) {
-                                                document.documentElement.classList.add('dark');
-                                                sunIcon.classList.remove('hidden');
-                                                moonIcon.classList.add('hidden');
-                                                localStorage.setItem('darkMode', 'true');
-                              } else {
-                                                document.documentElement.classList.remove('dark');
-                                                sunIcon.classList.add('hidden');
-                                                moonIcon.classList.remove('hidden');
-                                                localStorage.setItem('darkMode', 'false');
-                              }
-                }
-                if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                              setDarkMode(true);
-                }
-                toggle.addEventListener('click', () => {
-                              setDarkMode(!document.documentElement.classList.contains('dark'));
-                });
-      </script>
-      </script>
-</body>
-</html>
 </body>
 </html>
